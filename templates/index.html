@@ -11,6 +11,7 @@
     <div id="chat">
         <ul id="messages"></ul>
         <input id="message_input" autocomplete="off" /><button id="send_button">Send</button>
+        <button id="clear_button">Clear Chat</button>
     </div>
 
     <script>
@@ -28,6 +29,12 @@
             }
         });
 
+        // Clear chat messages
+        socket.on('clear', function(msg) {
+            $('#messages').empty();
+            $('#messages').append($('<li>').text(msg));
+        });
+
         // Send a message to the server when the send button is clicked
         $('#send_button').click(function() {
             var message = $('#message_input').val();
@@ -40,6 +47,12 @@
             if (event.which == 13) {
                 $('#send_button').click();
             }
+        });
+
+        // Handle clearing chat messages
+        $('#clear_button').click(function() {
+            socket.emit('clear');
+            // console.log("ciao");
         });
     </script>
 </body>

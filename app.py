@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send
 
 # Create a Flask application instance
 app = Flask(__name__)
@@ -25,6 +25,12 @@ def handle_connect():
 def handle_message(data):
     messages.append(data)  # Add the new message to the list
     socketio.emit('message', data)  # Broadcast the new message to all clients
+
+# Handle clearing messages
+@socketio.on('clear')
+def handle_clear():
+    messages.clear()
+    socketio.emit("clear", "Chat cleared")
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
