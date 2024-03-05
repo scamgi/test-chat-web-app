@@ -24,7 +24,7 @@ def handle_connect():
 @socketio.on('message')
 def handle_message(data):
     messages.append(data)  # Add the new message to the list
-    socketio.emit('message', data, broadcast=True)  # Broadcast the new message to all clients
+    socketio.emit('message', data)  # Broadcast the new message to all clients
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
